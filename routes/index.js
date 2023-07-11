@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+const messageRoute = require('./message');
+
+
 module.exports = (params) => {
+    router.use('/message', messageRoute(params))
+
     router.get('/', (req, res) => {
         try{
             res.render('layouts', {pageTitle: `Index`, page: "index"})
@@ -14,15 +19,13 @@ module.exports = (params) => {
     })
 
     router.use('/', (req, res) => {
-        res.render('layouts', {
-            pageTitle: "Cette page n'existe pas",
-            err: false,
-            page: "erreur"
+            res.render('layouts', {
+                pageTitle: "Cette page n'existe pas",
+                err: false,
+                page: "erreur"
             })
         }
     )
-
-
 
     return router;
 }

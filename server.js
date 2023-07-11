@@ -6,8 +6,8 @@ const port = 3000;
 
 //Router et controllers
 const router = require('./routes');
-const MessagesController = require('./controllers/MessagesController');
-const messagesController = new MessagesController("messages");
+const MessageController = require('./controllers/MessageController');
+const messageController = new MessageController("message");
 
 const app = express();
 
@@ -16,17 +16,11 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // Middleware pour récupérer les données de formulaire
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // Engine EJS et vues
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/views'));
-
-
-//Route pour soumettre le formulaire
-app.post('/message', (req, res) => {
-    console.log(req.body);
-    res.render('contact', {data: req.body});
-})
 
 //Config
 fs.readFile(path.join(__dirname, './data/config.json'), 'utf8', (err, data) => {
@@ -41,7 +35,7 @@ fs.readFile(path.join(__dirname, './data/config.json'), 'utf8', (err, data) => {
 
 //Controllers
 app.use('/', router({
-    messagesController
+    messageController
 }))
 
 //Lancement du serveur et logs
