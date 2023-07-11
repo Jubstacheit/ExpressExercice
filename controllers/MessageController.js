@@ -7,6 +7,9 @@ const writeFile = util.promisify(fs.writeFile);
 async function loadMessage(){
     try {
         const data = await readFile(this.dataFile);
+        if (data.length === 0) {
+            return []
+        }
         return JSON.parse(data);
     } catch (err) {
         console.log(err);
@@ -31,7 +34,7 @@ class MessageController{
 
     async getIndexPage (req, res) {
         try {
-            const messages = await loadMessage();
+            const messages = await loadMessage.call(this);
             res.render ('index', {messages})
         } catch (err) {
             console.error(err)
@@ -44,9 +47,9 @@ class MessageController{
         const newMessage = { title, message, name };
 
         try {
-            const message = await loadMessage();
+            const message = await loadMessage.call(this);
             message.push(newMessage);
-            await saveMessage(message);
+            await saveMessage.call(this, message);
             res.redirect('/');
         } catch (err) {
             console.error(err)
