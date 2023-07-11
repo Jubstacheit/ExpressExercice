@@ -1,7 +1,7 @@
 <h1><%= siteName%></h1>
 
 <h2>Postez votre message</h2>
-<form method="post" action="/">
+<form method="POST" action="/message">
     <div class="fields">
         <div class="field">
             <label for="title">Titre du message</label>
@@ -14,6 +14,9 @@
         <div class="field">
             <label for="name">Votre nom</label>
             <input type="text" name="name" id="name" placeholder="Nom"/>
+        </div>
+        <div class="field">
+            <input type="submit" value="Envoyer" />
         </div>
     </div>
 </form>
