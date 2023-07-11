@@ -6,8 +6,8 @@ const port = 3000;
 
 //Router et controllers
 const router = require('./routes');
-const MainController = require('./controllers/MainController');
-const mainController = new MainController("main");
+const MessagesController = require('./controllers/MessagesController');
+const messagesController = new MessagesController("messages");
 
 const app = express();
 
@@ -41,7 +41,7 @@ fs.readFile(path.join(__dirname, './data/config.json'), 'utf8', (err, data) => {
 
 //Controllers
 app.use('/', router({
-    mainController
+    messagesController
 }))
 
 //Lancement du serveur et logs
