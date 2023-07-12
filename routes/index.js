@@ -16,14 +16,15 @@ module.exports = (params) => {
 
             // une fois qu'on les a, on les affiches
             loadMessages.then((loadedMessages) => {
-
                 res.render('layouts', {
                     pageTitle: `Index`,
                     page: "index",
                     messages: loadedMessages
                 })
             })
+            console.log("Index chargé")
         } catch (err) {
+            console.error(err);
             res.render('layouts', {
                 pageTitle: `Une erreur s'est produite`,
                 page: "erreur",
@@ -61,6 +62,8 @@ module.exports = (params) => {
             // on récupère quand même tous les messages via le controller
             const loadMessages = messageController.loadEntry(); 
 
+            console.log("youhouuuu")
+
             try {
                 loadMessages.then((loadedMessages) => {
                     res.render('layouts', {
@@ -71,7 +74,10 @@ module.exports = (params) => {
                         messages: loadedMessages
                     })
                 })
+                console.log("Erreur d'envoi du message")
+
             } catch (err) {
+                console.error(err);
                 res.render('layouts', {
                     pageTitle: `Une erreur s'est produite`,
                     page: "erreur",
@@ -81,9 +87,35 @@ module.exports = (params) => {
             
         // sinon on envoie le message
         } else {
+            console.log("Message envoyé")
+
             const { title, content, name } = req.body;
             await messageController.addEntry({ title, content, name });
             console.log("Message envoyé")
+
+            // on récupère quand même tous les messages via le controller
+            const loadMessages = messageController.loadEntry();
+
+            try {
+                loadMessages.then((loadedMessages) => {
+                    res.render('layouts', {
+                        pageTitle: 'Message envoyé',
+                        page: 'index',
+                        messages: loadedMessages
+                    })
+                })
+                console.log("Message envoyé")
+
+            }
+            catch (err) {
+                console.error(err);
+                res.render('layouts', {
+                    pageTitle: `Une erreur s'est produite`,
+                    page: "erreur",
+                    error: { general: err }
+                })
+            }
+            
         }
     })
 
