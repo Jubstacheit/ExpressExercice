@@ -12,7 +12,7 @@ module.exports = (params) => {
         // try catch pour gérer les erreurs si jamais le controller ne fonctionne pas
         try {
             // on récupère tous les messages via le controller
-            const loadMessages = messageController.loadPost();
+            const loadMessages = messageController.loadEntry();
 
             // une fois qu'on les a, on les affiches
             loadMessages.then((loadedMessages) => {
@@ -53,19 +53,16 @@ module.exports = (params) => {
             console.log(messages)
 
             // on passe les erreurs pour créer un objet error
-
             let errorObject = {};
             messages.erreurs.forEach((erreur) => {
                 errorObject[erreur.path] = erreur.msg;
             })
 
-
             // on récupère quand même tous les messages via le controller
-            const loadMessages = messageController.loadPost(); 
+            const loadMessages = messageController.loadEntry(); 
 
             try {
                 loadMessages.then((loadedMessages) => {
-
                     res.render('layouts', {
                         pageTitle: 'Message non envoyé',
                         page: 'index',

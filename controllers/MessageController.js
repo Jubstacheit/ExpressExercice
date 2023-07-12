@@ -9,18 +9,16 @@ class MessageController{
         this.dataFile = `./data/${data}.json`;
     }
 
-    async loadPost(){
+    async loadEntry(){
         const data = await readFile(this.dataFile);
         
         if(!data) return ['Aucun message'];
         return JSON.parse(data);
     }
 
-    async addPost({title, content, name}) {
-        const data = (await this.loadPost()) || [];
-        console.log(data);
+    async addEntry({title, content, name}) {
+        const data = (await this.loadEntry()) || [];
         data.unshift({title, content, name});
-
         return writeFile(this.dataFile, JSON.stringify(data));
     }
 }
