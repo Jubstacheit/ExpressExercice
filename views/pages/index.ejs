@@ -1,19 +1,31 @@
 <h1><%= siteName%></h1>
 
 <h2>Postez votre message</h2>
-<form method="POST" action="/message">
+<form method="POST" action="/">
+    <% if (typeof error == 'object' && error.general) { %>
+        <p class="error" style="color: red; border: 2px solid red;"><%= error.general %></p>
+    <% } %>
     <div class="fields">
         <div class="field">
             <label for="title">Titre du message</label>
             <input type="text" name="title" id="title" placeholder="Titre" />
+            <% if (typeof error == 'object' && error.title) { %>
+                <p class="error" style="color: red; border: 2px solid red;"><%= error.title %></p>
+            <% } %>
         </div>
         <div class="field">
             <label for="content">Corps du message</label>
             <textarea name="content" id="content" placeholder="Message"></textarea>
+            <% if (typeof error == 'object' && error.content) { %>
+                <p class="error" style="color: red; border: 2px solid red;"><%= error.content %></p>
+            <% } %>
         </div>
         <div class="field">
             <label for="name">Votre nom</label>
             <input type="text" name="name" id="name" placeholder="Nom"/>
+            <% if (typeof error == 'object' && error.name) { %>
+                <p class="error" style="color: red; border: 2px solid red;"><%= error.name %></p>
+            <% } %>
         </div>
         <div class="field">
             <input type="submit" value="Envoyer" />
@@ -23,10 +35,19 @@
 
 <h2>Messages</h2>
 
-<!--<%/* post.forEach(function(message) { %>
-    <div class="message">
-        <h3><%= message.title %></h3>
-        <p><%= message.content %></p>
-        <p><%= message.name %></p>
-    </div>
-<% }); */%> -->
+<!-- on vérifie si un objet message existe -->
+<!-- si oui, on boucle dessus pour afficher les messages -->
+<!-- si non, on affiche un message d'erreur -->
+
+<% if (typeof messages == 'object' && messages) { %>
+    <% messages.forEach(function(message) { %>
+        <div class="message" style="border: 1px solid currentColor; padding: 10px; margin-bottom: 10px;">
+            <h3><%= message.title %></h3>
+            <p><%= message.content %></p>
+            <p><%= message.name %></p>
+        </div>
+    <% }); %>
+
+<% } else { %>
+    <p>Aucun message pour le moment</p>
+<% } %>

@@ -11,11 +11,14 @@ class MessageController{
 
     async loadPost(){
         const data = await readFile(this.dataFile);
+        
         if(!data) return ['Aucun message'];
+        return JSON.parse(data);
     }
 
     async addEntry({title, content, name}) {
         const data = (await this.loadPost()) || [];
+        console.log(data);
         data.unshift({title, content, name});
 
         return writeFile(this.dataFile, JSON.stringify(data));

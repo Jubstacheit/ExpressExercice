@@ -7,7 +7,7 @@ const port = 3000;
 //Router et controllers
 const router = require('./routes');
 const MessageController = require('./controllers/MessageController');
-const messageController = new MessageController("message");
+const messageController = new MessageController("messages");
 
 const app = express();
 
