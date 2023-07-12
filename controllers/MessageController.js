@@ -14,7 +14,7 @@ class MessageController{
         if(!data) return ['Aucun message'];
     }
 
-    async addEntry({title, content, name}) {
+    async addPost({title, content, name}) {
         const data = (await this.loadPost()) || [];
         data.unshift({title, content, name});
 

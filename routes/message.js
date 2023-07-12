@@ -27,14 +27,13 @@ module.exports = (params) => {
             })
         } else {
             const {title, content, name } = req.body;
-            await messageController.addEntry({title, content, name});
+            await messageController.addPost({title, content, name});
             console.log("Message envoyé")
         }
 
         res.render('layouts', {
             pageTitle: 'Message envoyé',
             page: 'index',
-            messages: messages.erreurs,
             post: req.body
         })
     })
