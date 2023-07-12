@@ -16,7 +16,7 @@ class MessageController{
         return JSON.parse(data);
     }
 
-    async addEntry({title, content, name}) {
+    async addPost({title, content, name}) {
         const data = (await this.loadPost()) || [];
         console.log(data);
         data.unshift({title, content, name});
