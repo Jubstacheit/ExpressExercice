@@ -5,11 +5,15 @@ const messageRoute = require('./message');
 
 
 module.exports = (params) => {
+    //Route Message
     router.use('/message', messageRoute(params))
 
+    //Route index et erreur
     router.get('/', (req, res) => {
         try{
-            res.render('layouts', {pageTitle: `Index`, page: "index"})
+            res.render('layouts', {
+                pageTitle: `Index`,
+                page: "index"})
         } catch (err) {
             res.render('layouts', {
                 pageTitle: `Une erreur s'est produite`,
