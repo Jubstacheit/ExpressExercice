@@ -1,53 +1,59 @@
-<h1><%= siteName%></h1>
+<div class="container container-fluid">
+    <h1 class="text-center lh-lg"><%= siteName%></h1>
 
-<h2>Postez votre message</h2>
-<form method="POST" action="/">
-    <% if (typeof error == 'object' && error.general) { %>
-        <p class="error" style="color: red; border: 2px solid red;"><%= error.general %></p>
-    <% } %>
-    <div class="fields">
-        <div class="field">
-            <label for="title">Titre du message</label>
-            <input type="text" name="title" id="title" placeholder="Titre" />
-            <% if (typeof error == 'object' && error.title) { %>
-                <p class="error" style="color: red; border: 2px solid red;"><%= error.title %></p>
-            <% } %>
+    <h2>Postez votre message</h2>
+    <form method="POST" action="/">
+        <% if (typeof error == 'object' && error.general) { %>
+            <p class="form-text text-danger"><%= error.general %></p>
+        <% } %>
+        <div class="fields">
+            <div class="mb-3">
+                <label class="form-label" for="title">Titre du message</label>
+                <input class="form-control" type="text" name="title" id="title" placeholder="Titre" />
+                <% if (typeof error == 'object' && error.title) { %>
+                    <p class="form-text text-danger"><%= error.title %></p>
+                <% } %>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="content">Corps du message</label>
+                <textarea class="form-control" name="content" id="content" placeholder="Message"></textarea>
+                <% if (typeof error == 'object' && error.content) { %>
+                    <p class="form-text text-danger"><%= error.content %></p>
+                <% } %>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="name">Votre nom</label>
+                <input class="form-control" type="text" name="name" id="name" placeholder="Nom"/>
+                <% if (typeof error == 'object' && error.name) { %>
+                    <p class="form-text text-danger"><%= error.name %></p>
+                <% } %>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-primary" type="submit" value="Envoyer" />
+            </div>
         </div>
-        <div class="field">
-            <label for="content">Corps du message</label>
-            <textarea name="content" id="content" placeholder="Message"></textarea>
-            <% if (typeof error == 'object' && error.content) { %>
-                <p class="error" style="color: red; border: 2px solid red;"><%= error.content %></p>
-            <% } %>
-        </div>
-        <div class="field">
-            <label for="name">Votre nom</label>
-            <input type="text" name="name" id="name" placeholder="Nom"/>
-            <% if (typeof error == 'object' && error.name) { %>
-                <p class="error" style="color: red; border: 2px solid red;"><%= error.name %></p>
-            <% } %>
-        </div>
-        <div class="field">
-            <input type="submit" value="Envoyer" />
-        </div>
+    </form>
+
+    <h2 class="lh-lg text-center">Messages</h2>
+
+    <!-- on vérifie si un objet message existe -->
+    <!-- si oui, on boucle dessus pour afficher les messages -->
+    <!-- si non, on affiche un message d'erreur -->
+    <div class="container col-lg-8">
+        <% if (typeof messages == 'object' && messages[0]) { %>
+            <% messages.forEach(function(message) { %>
+                <div class="card my-2">
+                    <div class="card-body">
+                        <h3 class="text-center"><%= message.title %></h3>
+                        <p class="fs-5"><%= message.content %></p>
+                        <br/>
+                        <p class="fs-6 fst-italic">Auteur.e : <%= message.name %></p>
+                    </div>
+                </div>
+            <% }); %>
+
+        <% } else { %>
+            <p class="text-center">Aucun message pour le moment</p>
+        <% } %>
     </div>
-</form>
-
-<h2>Messages</h2>
-
-<!-- on vérifie si un objet message existe -->
-<!-- si oui, on boucle dessus pour afficher les messages -->
-<!-- si non, on affiche un message d'erreur -->
-
-<% if (typeof messages == 'object' && messages) { %>
-    <% messages.forEach(function(message) { %>
-        <div class="message" style="border: 1px solid currentColor; padding: 10px; margin-bottom: 10px;">
-            <h3><%= message.title %></h3>
-            <p><%= message.content %></p>
-            <p><%= message.name %></p>
-        </div>
-    <% }); %>
-
-<% } else { %>
-    <p>Aucun message pour le moment</p>
-<% } %>
+</div>
